@@ -1,0 +1,4 @@
+
+	one bedroom average price ------>  73.409283
+
+	several bedroom average price ------>  139.977032
