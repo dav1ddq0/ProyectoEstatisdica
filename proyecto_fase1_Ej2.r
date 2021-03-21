@@ -92,6 +92,6 @@ for(i in 1:length(amount_of_bedrooms)){
 file_name = "./datos generados (Ejercicio 3)/answer.txt"
 fd <- file(file_name)
 open(fd, "w+b")
-write(paste("\n\tone bedroom average price ------> ", as.numeric(as.character(formatC(one_bedroom_price_sum/one_bedroom_amount, digits = 6, format = "f")))), file = file_name, append = TRUE)
-write(paste("\n\tseveral bedroom average price ------> ", as.numeric(as.character(formatC(several_bedroom_price_sum/several_bedroom_amount, digits = 6, format = "f")))), file = file_name, append = TRUE)
+write(paste("\n\tone bedroom average price ------> ", as.numeric(as.character(formatC(one_bedroom_price_sum/one_bedroom_amount, digits = 3, format = "f")))), file = file_name, append = TRUE)
+write(paste("\n\tseveral bedroom average price ------> ", as.numeric(as.character(formatC(several_bedroom_price_sum/several_bedroom_amount, digits = 3, format = "f")))), file = file_name, append = TRUE)
 close(fd)
