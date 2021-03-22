@@ -1,15 +1,16 @@
 options(digits = 5)
 
 stats <- function(x){
-    x_mean = mean(x)
-    ux <- unique(x)
-    tab <- tabulate(match(x, ux))
+    round_x = as.numeric(as.character(formatC(x, digits = 4, format = "f")))
+    x_mean = as.numeric(as.character(formatC(mean(x), digits = 4, format = "f")))
+    ux <- unique(round_x)
+    tab <- tabulate(match(round_x, ux))
     x_mode <- ux[tab == max(tab)]
-    x_median <- median(x)
-    x_sd <- sd(x)
-    x_varc <- var(x)
-    x_var_coeff <- x_sd/x_mean
-    quantiles <- quantile(x)
+    x_median <- as.numeric(as.character(formatC(median(x), digits = 4, format = "f")))
+    x_sd <- as.numeric(as.character(formatC(sd(x), digits = 4, format = "f")))
+    x_varc <- as.numeric(as.character(formatC(var(x), digits = 4, format = "f")))
+    x_var_coeff <- as.numeric(as.character(formatC(x_sd/x_mean, digits = 4, format = "f")))
+    quantiles <- as.numeric(as.character(formatC(quantile(x), digits = 4, format = "f")))
     answer <- list("mean" = x_mean, "mode" = x_mode, "median" = x_median, "sd" = x_sd, "varc" = x_varc, "var_coeff" = x_var_coeff, "quantiles" = quantiles)
 }
 
@@ -74,24 +75,29 @@ export_data(stats(accommodates), "./datos generados (Ejercicio 2)/accomodates.tx
 export_data(stats(prices), "./datos generados (Ejercicio 2)/prices.txt")
 export_data(stats(reviews_per_month), "./datos generados (Ejercicio 2)/reviews_per_month.txt")
 
-one_bedroom_amount <- 0
-one_bedroom_price_sum <- 0
-several_bedroom_amount <- 0
-several_bedroom_price_sum <- 0
+one_bedroom_houses <- c()
+i1 <- 1
+several_bedroom_houses <- c()
+i2 <- 1
+
 for(i in 1:length(amount_of_bedrooms)){
     if (amount_of_bedrooms[i] == 1) {
-       one_bedroom_amount <- one_bedroom_amount + 1
-       one_bedroom_price_sum <- one_bedroom_price_sum + prices[i]
+       one_bedroom_houses[i1] <- prices[i]
+       i1 <- i1 + 1
     }
     else {
-        several_bedroom_amount <- several_bedroom_amount + 1
-        several_bedroom_price_sum <- several_bedroom_price_sum + prices[i]
+        several_bedroom_houses[i2] <- prices[i]
+        i2 <- i2 + 1
     }
 }
 
-file_name = "./datos generados (Ejercicio 3)/answer.txt"
-fd <- file(file_name)
-open(fd, "w+b")
-write(paste("\n\tone bedroom average price ------> ", as.numeric(as.character(formatC(one_bedroom_price_sum/one_bedroom_amount, digits = 3, format = "f")))), file = file_name, append = TRUE)
-write(paste("\n\tseveral bedroom average price ------> ", as.numeric(as.character(formatC(several_bedroom_price_sum/several_bedroom_amount, digits = 3, format = "f")))), file = file_name, append = TRUE)
-close(fd)
+print(one_bedroom_houses)
+print(several_bedroom_houses)
+print(t.test(one_bedroom_houses, several_bedroom_houses, alternative = "greater"))
+
+#file_name = "./datos generados (Ejercicio 3)/answer.txt"
+#fd <- file(file_name)
+#open(fd, "w+b")
+#write(paste("\n\tone bedroom average price ------> ", as.numeric(as.character(formatC(one_bedroom_price_sum/one_bedroom_amount, digits = 3, format = "f")))), file = file_name, append = TRUE)
+#write(paste("\n\tseveral bedroom average price ------> ", as.numeric(as.character(formatC(several_bedroom_price_sum/several_bedroom_amount, digits = 3, format = "f")))), file = file_name, append = TRUE)
+#close(fd)
